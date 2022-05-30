@@ -34,10 +34,12 @@ app.get("/", function (req, res) {
   });
 });
 
-app.get("/:listName", function(req,res){
-  const customListName = req.params.custom;
-  activeList = req.params.listName;  
-  res.redirect("/");
+app.get("/list", function (req, res) {
+  console.log(req.query.name);
+  if (req.query.name) {
+    activeList = req.query.name;  
+    res.redirect("/");
+  }
 });
 
 app.post("/", function(req, res) {
@@ -68,6 +70,11 @@ app.get("/about", function(req, res){
   res.render("about");
 });
 
-app.listen(process.env.PORT, function() {
-  console.log("Server started on port 3000");
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
+app.listen(port, function() {
+  console.log("Server started on port " + port);
 });
